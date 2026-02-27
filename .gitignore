@@ -290,3 +290,4 @@ plugins/check_disk.d/.dirstamp
 gl/unicase/.deps/
 gl/unictype/.deps/
 gl/uniwidth/.deps/
+_codeql_detected_source_root
