@@ -20,7 +20,7 @@ void test_rainerscript_format(void);
 void test_rainerscript_format_parsing(void);
 
 int main(void) {
-	plan_tests(23);
+	plan_tests(24);
 
 	diag("Simple test with one subcheck");
 	test_one_subcheck();
@@ -349,4 +349,5 @@ void test_rainerscript_format(void) {
 void test_rainerscript_format_parsing(void) {
 	parsed_output_format result = mp_parse_output_format("rainerscript");
 	ok(result.parsing_success == true, "Parsing 'rainerscript' format string succeeds");
+	ok(result.output_format == MP_FORMAT_RAINERSCRIPT, "Parsed format is MP_FORMAT_RAINERSCRIPT");
 }
