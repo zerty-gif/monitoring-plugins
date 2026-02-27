@@ -37,6 +37,7 @@ typedef struct subcheck_list {
 typedef enum output_format {
 	MP_FORMAT_MULTI_LINE,
 	MP_FORMAT_TEST_JSON,
+	MP_FORMAT_RAINERSCRIPT,
 } mp_output_format;
 
 #define MP_FORMAT_DEFAULT MP_FORMAT_MULTI_LINE
