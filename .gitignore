@@ -2,6 +2,9 @@
 NP-VERSION-FILE
 *.o
 
+# CodeQL
+_codeql_detected_source_root
+
 # /
 /aclocal.m4
 /autom4te*.cache
@@ -96,6 +99,15 @@ NP-VERSION-FILE
 /gl/malloc/dynarray-skeleton.gl.h
 /gl/malloc/dynarray.gl.h
 /gl/stdckdint.h
+/gl/pthread.h
+/gl/sched.h
+/gl/uchar.h
+/gl/unicase/.deps
+/gl/unicase/.dirstamp
+/gl/unictype/.deps
+/gl/unictype/.dirstamp
+/gl/uniwidth/.deps
+/gl/uniwidth/.dirstamp
 
 # /lib/
 /lib/.deps
@@ -127,6 +139,9 @@ NP-VERSION-FILE
 /lib/tests/test_opts2
 /lib/tests/test_opts3
 /lib/tests/extra_opts.Po
+/lib/tests/test_generic_output
+/lib/tests/test-suite.log
+/lib/tests/*.log
 
 # /m4/
 /m4/Makefile

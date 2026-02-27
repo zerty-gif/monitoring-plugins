@@ -305,6 +305,7 @@ char *mp_fmt_output(mp_check check) {
 
 		break;
 	}
+	case MP_FORMAT_JSON:
 	case MP_FORMAT_TEST_JSON: {
 		cJSON *resultObject = cJSON_CreateObject();
 		if (resultObject == NULL) {
@@ -584,6 +585,7 @@ mp_subcheck mp_set_subcheck_default_state(mp_subcheck check, mp_state_enum state
 
 char *mp_output_format_map[] = {
 	[MP_FORMAT_MULTI_LINE] = "multi-line",
+	[MP_FORMAT_JSON] = "json",
 	[MP_FORMAT_TEST_JSON] = "mp-test-json",
 };
 
