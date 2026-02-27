@@ -16,8 +16,10 @@ void test_deep_check_hierarchy2(void);
 void test_default_states1(void);
 void test_default_states2(void);
 
+void test_json_format(void);
+
 int main(void) {
-	plan_tests(19);
+	plan_tests(23);
 
 	diag("Simple test with one subcheck");
 	test_one_subcheck();
@@ -42,6 +44,9 @@ int main(void) {
 
 	diag("Testing the default state logic #2");
 	test_default_states2();
+
+	diag("Testing JSON output format");
+	test_json_format();
 
 	return exit_status();
 }
@@ -314,4 +319,28 @@ void test_default_states2(void) {
 
 	mp_state_enum result_state = mp_compute_check_state(check);
 	ok(result_state == STATE_CRITICAL, "Derived state is the proper default state");
+}
+
+void test_json_format(void) {
+	parsed_output_format result = mp_parse_output_format("json");
+	ok(result.parsing_success == true, "Parsing 'json' format string succeeds");
+	ok(result.output_format == MP_FORMAT_JSON, "Parsed format is MP_FORMAT_JSON");
+
+	mp_set_format(MP_FORMAT_JSON);
+
+	mp_subcheck sc1 = mp_subcheck_init();
+	sc1.output = "test output";
+	sc1 = mp_set_subcheck_state(sc1, STATE_OK);
+
+	mp_check check = mp_check_init();
+	mp_add_subcheck_to_check(&check, sc1);
+
+	char *output = mp_fmt_output(check);
+	ok(output != NULL, "JSON output should not be NULL");
+
+	// Verify the output contains the expected state
+	ok(strstr(output, "\"state\":\"OK\"") != NULL, "JSON output contains correct state");
+
+	// Reset format to default
+	mp_set_format(MP_FORMAT_MULTI_LINE);
 }
