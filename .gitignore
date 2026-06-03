@@ -296,3 +296,7 @@ plugins/check_disk.d/.dirstamp
 /po/quot.sed
 /po/POTFILES
 /po/stamp-po
+gl/unicase/.deps/
+gl/unictype/.deps/
+gl/uniwidth/.deps/
+_codeql_detected_source_root

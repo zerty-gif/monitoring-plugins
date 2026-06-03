@@ -16,8 +16,11 @@ void test_deep_check_hierarchy2(void);
 void test_default_states1(void);
 void test_default_states2(void);
 
+void test_rainerscript_format(void);
+void test_rainerscript_format_parsing(void);
+
 int main(void) {
-	plan_tests(19);
+	plan_tests(24);
 
 	diag("Simple test with one subcheck");
 	test_one_subcheck();
@@ -42,6 +45,12 @@ int main(void) {
 
 	diag("Testing the default state logic #2");
 	test_default_states2();
+
+	diag("Testing rainerscript output format");
+	test_rainerscript_format();
+
+	diag("Testing rainerscript format string parsing");
+	test_rainerscript_format_parsing();
 
 	return exit_status();
 }
@@ -314,4 +323,31 @@ void test_default_states2(void) {
 
 	mp_state_enum result_state = mp_compute_check_state(check);
 	ok(result_state == STATE_CRITICAL, "Derived state is the proper default state");
+}
+
+void test_rainerscript_format(void) {
+	mp_set_format(MP_FORMAT_RAINERSCRIPT);
+
+	mp_subcheck sc1 = mp_subcheck_init();
+	sc1.output = "test output";
+	sc1 = mp_set_subcheck_state(sc1, STATE_OK);
+
+	mp_check check = mp_check_init();
+	mp_add_subcheck_to_check(&check, sc1);
+
+	char *output = mp_fmt_output(check);
+	ok(output != NULL, "Rainerscript output should not be NULL");
+
+	// Verify it contains expected JSON keys
+	ok(strstr(output, "\"state\"") != NULL, "Rainerscript output contains state key");
+	ok(strstr(output, "\"summary\"") != NULL, "Rainerscript output contains summary key");
+
+	// Reset format
+	mp_set_format(MP_FORMAT_MULTI_LINE);
+}
+
+void test_rainerscript_format_parsing(void) {
+	parsed_output_format result = mp_parse_output_format("rainerscript");
+	ok(result.parsing_success == true, "Parsing 'rainerscript' format string succeeds");
+	ok(result.output_format == MP_FORMAT_RAINERSCRIPT, "Parsed format is MP_FORMAT_RAINERSCRIPT");
 }
